@@ -1,43 +1,45 @@
-import { format, formatDistanceToNow } from 'date-fns';
-import ptBR  from 'date-fns/locale/pt-BR'
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import { Avatar } from "../Avatar/Avatar";
 import { Comment } from "../Comment/Comment";
 import styles from "./Post.module.css";
-import { useState } from 'react';
-
-
+import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-export function Post({ author, publishedAt, content}){
-  const [comments, setComments] = useState([
-    'Posto muito bacana, hein?!'
-  ])
+export function Post({ author, publishedAt, content }) {
+  const [comments, setComments] = useState(["Posto muito bacana, hein?!"]);
 
-  const [newCommentText, setNewCommentText] = useState('');
+  const [newCommentText, setNewCommentText] = useState("");
 
-  const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
+  const publishedDateFormatted = format(
+    publishedAt,
+    "d 'de' LLLL 'às' HH:mm'h'",
+    {
+      locale: ptBR,
+    }
+  );
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     locale: ptBR,
+    addSuffix: true,
   });
 
-  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt,{
-    locale: ptBR,
-    addSuffix: true
-  })
-
-  function handleCreatenewComment(){
-    event.preventDefault()
+  function handleCreatenewComment() {
+    event.preventDefault();
     setComments([...comments, newCommentText]);
 
-    setNewCommentText('');
+    setNewCommentText("");
   }
 
-  function handleNewCommentChange () {
+  function handleNewCommentChange() {
     setNewCommentText(event.target.value);
-
-
   }
 
-  return(
+  function deleteComment() {
+    console.log(`Deletar comentario ${comments}`);
+  }
+
+  return (
     <>
       <article className={styles.post}>
         <header>
@@ -49,20 +51,26 @@ export function Post({ author, publishedAt, content}){
             </div>
           </div>
 
-          <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
+          <time
+            title={publishedDateFormatted}
+            dateTime={publishedAt.toISOString()}
+          >
             {publishedDateRelativeToNow}
           </time>
         </header>
 
         <div className={styles.content}>
-
-          {content.map(line =>{
-            if(line.type === 'paragraph'){
+          {content.map((line) => {
+            if (line.type === "paragraph") {
               // eslint-disable-next-line react/jsx-key
-              return <p>{line.content}</p>
-            }else if (line.type === 'link'){
+              return <p key={line.content}>{line.content}</p>;
+            } else if (line.type === "link") {
               // eslint-disable-next-line react/jsx-key
-              return <p><a href="#">{line.content}</a></p>
+              return (
+                <p key={line.content}>
+                  <a href="#">{line.content}</a>
+                </p>
+              );
             }
           })}
         </div>
@@ -75,7 +83,6 @@ export function Post({ author, publishedAt, content}){
             placeholder="Deixe um comentário"
             value={newCommentText}
             onChange={handleNewCommentChange}
-            
           />
 
           <footer>
@@ -84,12 +91,17 @@ export function Post({ author, publishedAt, content}){
         </form>
 
         <div className={styles.commentList}>
-          {comments.map(comment =>{
-            return <Comment content={comment}/>
-          })}          
+          {comments.map((comment) => {
+            return (
+              <Comment
+                key={comment}
+                content={comment}
+                onDeleteComment={deleteComment}
+              />
+            );
+          })}
         </div>
-
       </article>
     </>
-  )
+  );
 }
