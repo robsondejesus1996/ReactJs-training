@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style type="text/css">
+      body {
+        background: black;
+        color: white;
+      }
+    </style>
+
+    <script>
+
+      function handleParam(mensagem){
+        alert(mensagem)
+      }
+
+      function acenderLampada() {
+        const hello = 'Hello World!';
+        alert(`Acener Lampada! ${hello}`);
+        document.getElementById("imgLampada").src="https://img.freepik.com/premium-photo/beautiful-lamp-table-dark-room-lamp-is-only-source-light-room-light-from-lamp-is-warm-inviting_14117-135227.jpg?w=1060";
+        document.body.style.background = "white";
+
+      }
+
+      function mudaCorBody(color){
+        document.body.style.background = color;
+      }
+      
+    </script>
+
+
+  </head>
+  <body>
+    <img id="imgLampada" style="display: block;" src="https://as2.ftcdn.net/jpg/00/77/99/99/1000_F_77999958_tZYT7xWlSJewLgsMYY3CrAWvYITlWYTF.jpg" height="200" width="200" />
+    <br />
+    <button onclick="acenderLampada()">Acender</button>
+    <button onclick="handleParam('OPpa')">Acender com parametro</button>
+    <button onclick="mudaCorBody('blue')">Cor Azul</button>
+    <button onclick="mudaCorBody('red')">Cor red</button>
+
+    <button onmouseover="mudaCorBody('pink')">Opa OPa</button>
+  </body>
+</html>

@@ -2,13 +2,13 @@
   margin-top: 1.5rem;
   display: flex;
   gap: 1rem;
-
 }
 
-.comment > img {
+.comment > img{
   width: 3rem;
   height: 3rem;
   border-radius: 8px;
+  
 }
 
 .commentBox{
@@ -27,8 +27,6 @@
   justify-content: space-between;
 }
 
-
-
 .authorAndTime strong{
   display: block;
   font-size: 0.875rem;
@@ -43,37 +41,36 @@
 }
 
 
-.commentContent header button {
+.commentContent header button{
   background: transparent;
   border: 0;
   color: var(--gray-400);
   cursor: pointer;
+
+
   line-height: 0;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .commentContent header button:hover{
   color: var(--red-500);
 }
 
-
-.commentContent p {
+.commentContent p{
   margin-top: 1rem;
   color: var(--gray-300);
-
 }
 
 .commentBox footer{
   margin-top: 1rem;
-
 }
+
 
 .commentBox footer button{
   background: transparent;
   border: 0;
   color: var(--gray-400);
   cursor: pointer;
-
   display: flex;
   align-items: center;
 
@@ -84,12 +81,11 @@
   color: var(--green-300);
 }
 
-.commentBox footer button svg {
+.commentBox footer button svg{
   margin-right: 0.5rem;
 }
 
-.commentBox footer button span::before {
+.commentBox footer button span::before{
   content: "\2022";
   padding: 0 0.25rem;
-
 }

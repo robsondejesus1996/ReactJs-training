@@ -9,11 +9,11 @@
   align-items: flex-start;
 }
 
+
 @media (max-width: 768px){
   html{
-    font-size: 87.5%;
+    font-size: 0.875rem;
   }
-
   .wrapper{
     grid-template-columns: 1fr;
   }
