@@ -3,7 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 import { useForm } from 'react-hook-form';
 import { CountdownContainer, FormContainer, HomeContainer, MinutesAmountInput, Separator, StartCountdownButton, TaskInput } from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { differenceInSeconds } from 'date-fns';
 
 
 const newCycleFormValidationSchema = zod.object({
@@ -18,6 +19,7 @@ interface Cycle {
   id: string
   task: string
   minutesAmout: number
+  startDate: Date
 }
 
 export function Home() {
@@ -33,12 +35,23 @@ export function Home() {
     }
   });
 
+  const activeCycle = cycles.find(cycle => cycle.id === activeCycleId)
+
+  useEffect(() => {
+    if(activeCycle){
+      setInterval(() => {
+        setAmoutSecondsPassed(differenceInSeconds(new Date(), activeCycle.startDate))
+      }, 1000);
+    }
+  }, [activeCycle])
+
   function handleCreateNewCycle(data: NewCycleFormData) {
     const id = String (new Date().getTime());
     const newCycle: Cycle = {
       id,
       task: data.task,
       minutesAmout: data.minutesAmout,
+      startDate: new Date(), 
     }
 
     setCycles(state => [...state, newCycle]);
@@ -47,7 +60,7 @@ export function Home() {
     reset();
   }
 
-  const activeCycle = cycles.find(cycle => cycle.id === activeCycleId)
+  
 
   const totalSeconds = activeCycle ? activeCycle.minutesAmout * 60 : 0
   const currentSeconds = activeCycle ? totalSeconds - amoutSecondsPassed: 0;
